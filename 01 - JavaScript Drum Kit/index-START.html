@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 
@@ -57,10 +59,32 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
+  <script>
+    window.addEventListener('keydown', function(e) {
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`); //Agarro el audio de la key que estoy tocando
+      const key = document.querySelector(`.key[data-key="${e.keyCode}"]`) //Agarro la clase de la key que estoy tocando
+      if(!audio) return; //Stop the function from running
+      audio.currentTime = 0; //La devuelve a 0, entonces no espera a que termine, sino que la hace terminar
+      audio.play();
+      key.classList.add('playing')
+      /* setTimeout(function() {
+        key.classList.remove('playing')
+      }, 60) Puedo usar esta funcion para hacer que se vaya el borde amarillo, no es conveniente*/
+    })
 
-</script>
+    function removeTransition(e) {
+      if (e.propertyName !== 'transform') return; //Si no es una transition que no haga nada
+      console.log(e)
+      this.classList.remove('playing')
+    }
+
+    const keys = document.querySelectorAll('.key')
+    keys.forEach(key => {
+      key.addEventListener('transitionend', removeTransition)
+    })
+  </script>
 
 
 </body>
+
 </html>
