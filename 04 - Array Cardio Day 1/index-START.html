@@ -37,28 +37,91 @@
     
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
+    const fifteen = inventors.filter(inventor => (
+      inventor.year > 1500 && inventor.year < 1600
+    ))
+    console.table(fifteen)
 
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
+    const inventorArr = inventors.map(inventor => (
+    `${inventor.first} ${inventor.last}`
+    ))
+    console.log(inventorArr)
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
+    /* const inventorOrdered = inventors.sort((a, b) => {
+      if (a.year > b-year) {
+        return 1
+      } else {
+        return -1
+      }
+    }) */
+    const inventorOrdered = inventors.sort((a, b) => a.year > b.year ? 1 : -1)
+    console.table(inventorOrdered)
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
+    const inventorsYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year)}, 0)
+    console.log(inventorsYears)
 
     // 5. Sort the inventors by years lived
+    const inventorYearsLivedSorted = inventors.sort(
+      (firstInv, nextInv) => (firstInv.passed - firstInv.year) > (nextInv.passed - nextInv.year) ? -1 : 1
+    )
+    console.table(inventorYearsLivedSorted)
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    /* let category = document.querySelector(".mw-category")
+    let blvds = category.querySelectorAll("a")
+    let blvds = Array.from(category.querySelectorAll("a"))
 
+    const de = blvds
+                    .map(el => el.innerText) //Primero les agarro el innerText
+                    .filter(el => el.includes('de')) //Despues los filtro */
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const pplSorted = people.sort((a, b) => 
+    {
+      const [aLast, aFirst] = a.split(', ') //Tengo que obtener del string que me dan, que esta separado por ", "
+      const [bLast, bFirst] = b.split(', ') //Ahora puedo ordenarlos
+
+      return aLast > bLast ? 1 : -1
+    })
+    console.table(pplSorted)
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const categories = data.reduce((cat, el) => {
+      if (!cat[el]) {
+        cat[el] = 0
+      }
+      cat[el]++
+      return cat //SIEMPRE HAY QUE HACER RETURN!!!
+    }, {})
+    console.table(categories)
+
+    // ADICIONALES
+    const input = [ 1, -4, 12, 0, -3, 29, -150]; //Sum every positive element
+    const sumEveryPos = input.reduce((sum, num) => {
+      if(num > 0) {
+        sum += num
+      }
+      return sum
+    }, 0)
+    console.log(sumEveryPos)
+
+    const input1 = [12, 46, 32, 64] // Calculate median
+    const mean = input1.reduce((med, num, index, arr) => {
+      med += num
+      return (med/(arr.length))
+    }, 0)
+    console.table(mean)
 
   </script>
 </body>
